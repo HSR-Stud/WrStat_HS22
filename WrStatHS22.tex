@@ -63,6 +63,8 @@
 \section*{Lizenz}
 \doclicenseThis
 
+\clearpage
+
 \tableofcontents
 
 % actual content
@@ -103,11 +105,27 @@
     $|A \cup B| = |A| + |B| - |A \cap B| $ & 
     $|A \times B| = |A| \cdot |B| $     
 \end{tabular}
-\subsection{Anordnung und Auswahl}  
-\begin{tabular}{c c c c}
-Anordnung - Permutation & Auswahl - Kombination
+\subsection{Kombinatorik - Regeln}  
+\begin{tabular}{|l| p{10cm}|}
+    \hline Anordnung - Permutation & 
+    auf wie viele Arten kann man $n$ Objekte anordnen? \newline
+    $ n \cdot (n-1) \cdot (n-2) \cdots \cdot 1 = n! $ \\
+    \hline Auswahl - Kombination & 
+    Auf wie viele Arten kann man k aus n Auswählen? \newline
+    Auswahl: $ n \cdot (n-1) \cdot \cdots \cdot (n-(k+1)) = \frac{n!}{(n-k)!}$
+    Anordnung der Auswahl:  $k \cdots (k-1) \cdot \cdots \cdot = k!$
+    Insgesamt: $ C^n_k = \frac{n!}{k!(n-k)!} = \binom{n}{k} $ \\
+    \hline Variation & 
+    Perlenkettenproblem:
+    auf wie viele Arten kann man eine Perlenkette der Länge k aus n Farben herstellen? \newline
+    $V_n,k = n \cdot n^k-1 = n^k$\\
+    \hline Rekursion &
+    \\ /TODO:
+    \hline Erzeugende Funktion &
+    \\ /TODO:
+    \hline
 \end{tabular}
 
-
+\section{Ereignisse und Wahrscheinlichkeit}
 
 \end{document}
