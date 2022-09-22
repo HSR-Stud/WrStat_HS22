@@ -13,6 +13,7 @@
 
 %% Language configuration
 \usepackage{polyglossia}
+\usepackage{tikz}
 \setdefaultlanguage[variant=swiss]{german}
 
 %% License configuration
@@ -27,17 +28,15 @@
 % Metadata
 
 \course{Elektrotechnik}
-\module{ModAbk}
-\semester{Fr\"uhlingssemester 2020}
+\module{WrStat}
+\semester{Herbstsemester 2022}
 
-\authoremail{vorname.name@ost.ch}
-\author{\textsl{Vorname Name} -- \texttt{\theauthoremail}}
+\authoremail{joel.leirer@ost.ch}
+\author{\textsl{Joël Leirer} -- \texttt{\theauthoremail}}
 
 % did someone help you with this work?
 \contributors{
-  % I created this template, does that count?
-  Naoki Pross
-  % do not forget to add yourself!
+
 }
 
 \title{\texttt{\themodule} Zusammenfassung}
@@ -60,6 +59,7 @@
 % \section*{Contributors}
 % \thecontributors
 
+
 \section*{Lizenz}
 \doclicenseThis
 
@@ -70,10 +70,44 @@
 \setcounter{page}{1}
 \pagenumbering{arabic}
 
-\section{Einf\"uhrung}
-\[
-  i\hbar \partial_t \left| \psi(t) \right\rangle 
-    = \hat{H} \left| \psi(t) \right\rangle
-\]
+\section{Kombinatorik}
+\subsection{Zählregeln}
+\begin{tabular}{c c c}
+    Disjunktive Vereinigung & Schnittmengen & Produkt \\
+    \begin{tikzpicture}
+        \fill[red!30!white]   (0,0) circle (0.8);
+        \fill[green!30!white] (1.7,0) circle (0.8);      
+        \node at (0,0)    {$A$};
+        \node at (1.7,0)   {$B$};
+    \end{tikzpicture}
+    &
+    \begin{tikzpicture}
+        \begin{scope}[blend group = soft light]
+            \fill[red!30!white]   ( 90:0.8) circle (0.8);
+            \fill[green!30!white] (180:0.8) circle (0.8);
+        \end{scope}
+        \node at ( 90:0.8)  {$A$};
+        \node at (180:0.8)   {$B$};
+    \end{tikzpicture}
+    &
+    \begin{tikzpicture}
+        \fill[black!30!white] (0.3,-0.3) rectangle (1.6,-1.6);
+        \fill[red!30!white]  (0.3,0) rectangle (1.6,-0.25);
+        \fill[green!30!white](0,-0.3) rectangle (0.25,-1.6);
+        \node at (0.95, 0.2) {$A$};
+        \node at (-0.2, -0.95) {$B$};
+        \node at (0.95, -0.95) {$ A \times B $};
+    \end{tikzpicture}
+    \\\\
+    $|A \cup B| = |A| + |B| $  & 
+    $|A \cup B| = |A| + |B| - |A \cap B| $ & 
+    $|A \times B| = |A| \cdot |B| $     
+\end{tabular}
+\subsection{Anordnung und Auswahl}  
+\begin{tabular}{c c c c}
+Anordnung - Permutation & Auswahl - Kombination
+\end{tabular}
+
+
 
 \end{document}
