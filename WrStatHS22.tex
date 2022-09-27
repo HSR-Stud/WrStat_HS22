@@ -12,6 +12,7 @@
 \usepackage{tex/hsrstud}
 
 %% Language configuration
+\usepackage{multicol}
 \usepackage{polyglossia}
 \usepackage{tikz}
 \setdefaultlanguage[variant=swiss]{german}
@@ -75,14 +76,14 @@
 \section{Kombinatorik}
 \subsection{Zählregeln}
 \begin{tabular}{c c c}
-    Disjunktive Vereinigung & Schnittmengen & Produkt \\
+    Disjunktive Vereinigung                & Schnittmengen & Produkt \\
     \begin{tikzpicture}
         \fill[red!30!white]   (0,0) circle (0.8);
-        \fill[green!30!white] (1.7,0) circle (0.8);      
+        \fill[green!30!white] (1.7,0) circle (0.8);
         \node at (0,0)    {$A$};
         \node at (1.7,0)   {$B$};
     \end{tikzpicture}
-    &
+                                           &
     \begin{tikzpicture}
         \begin{scope}[blend group = soft light]
             \fill[red!30!white]   ( 90:0.8) circle (0.8);
@@ -91,7 +92,7 @@
         \node at ( 90:0.8)  {$A$};
         \node at (180:0.8)   {$B$};
     \end{tikzpicture}
-    &
+                                           &
     \begin{tikzpicture}
         \fill[black!30!white] (0.3,-0.3) rectangle (1.6,-1.6);
         \fill[red!30!white]  (0.3,0) rectangle (1.6,-0.25);
@@ -101,31 +102,107 @@
         \node at (0.95, -0.95) {$ A \times B $};
     \end{tikzpicture}
     \\\\
-    $|A \cup B| = |A| + |B| $  & 
-    $|A \cup B| = |A| + |B| - |A \cap B| $ & 
-    $|A \times B| = |A| \cdot |B| $     
+    $|A \cup B| = |A| + |B| $              &
+    $|A \cup B| = |A| + |B| - |A \cap B| $ &
+    $|A \times B| = |A| \cdot |B| $
 \end{tabular}
-\subsection{Kombinatorik - Regeln}  
+\subsection{Kombinatorik - Regeln}
 \begin{tabular}{|l| p{10cm}|}
-    \hline Anordnung - Permutation & 
+    \hline Anordnung - Permutation &
     auf wie viele Arten kann man $n$ Objekte anordnen? \newline
-    $ n \cdot (n-1) \cdot (n-2) \cdots \cdot 1 = n! $ \\
-    \hline Auswahl - Kombination & 
+    $ n \cdot (n-1) \cdot (n-2) \cdots \cdot 1 = n! $         \\
+    \hline Auswahl - Kombination   &
     Auf wie viele Arten kann man k aus n Auswählen? \newline
     Auswahl: $ n \cdot (n-1) \cdot \cdots \cdot (n-(k+1)) = \frac{n!}{(n-k)!}$
     Anordnung der Auswahl:  $k \cdots (k-1) \cdot \cdots \cdot = k!$
     Insgesamt: $ C^n_k = \frac{n!}{k!(n-k)!} = \binom{n}{k} $ \\
-    \hline Variation & 
+    \hline Variation               &
     Perlenkettenproblem:
     auf wie viele Arten kann man eine Perlenkette der Länge k aus n Farben herstellen? \newline
-    $V_n,k = n \cdot n^k-1 = n^k$\\
-    \hline Rekursion & /TODO:
-    \\ 
-    \hline Erzeugende Funktion & /TODO:
-    \\ 
+    $V_n,k = n \cdot n^k-1 = n^k$                             \\
+    \hline Rekursion               & /TODO:
+    \\
+    \hline Erzeugende Funktion     & /TODO:
+    \\
     \hline
 \end{tabular}
 
 \section{Ereignisse und Wahrscheinlichkeit}
+\subsection{Ereignisse}
+\begin{multicols}{2}
+    \begin{tikzpicture}
+        \begin{scope}[blend group = soft light]
+            \fill [red!30!white] (0,0) circle [x radius = 1.2, y radius = 1.8];
+            \fill [green!30!white] (2,-1) circle [y radius = 1.2, x radius = 1.8];
+        \end{scope}
+        \node [red] at (0.0, 1) {$A$};
+        \node [green] at (3, -0.95) {$B$};
+        \node [black]at (0, 0.2) {$ \omega $};
+        \node [black]at  (3.5, 1.5) {$ \Omega $};
+        \fill [black] (0,0) circle [radius = 0.05];
+        \draw [black] (-1.5,2) rectangle (4,-2.5);
+    \end{tikzpicture}
+    \begin{itemize}
+        \item $\omega$ = Elementarereignis (Versuchsausgang)
+        \item $\Omega$ = Menge der Elementarereignisse
+        \item $A$ und $B$ = Teilmengen von $\Omega$ (hier $\omega \in A, \omega \notin B$)
+        \item Spezialfälle:
+              \begin{itemize}
+                  \item $A =\Omega \subset \Omega$: A tritt immer ein (sicheres Ereignis)
+                  \item $B = \emptyset \subset \Omega$: B tritt nie ein (unmögliches Ereignis)
+              \end{itemize}
+    \end{itemize}
+\end{multicols}
+\begin{tabular}{l m{4cm}}
+    \begin{tabular}{|p{2.5cm} |l|}
+        \hline
+        Modell                          & Begriff                                      \\
+        \hline
+        $\omega$                        & Versuchsausgang, Elementarereignis           \\
+        $\Omega$                        & alle Versuchsausgänge                        \\
+        $A \subset \Omega$              & Ereignis                                     \\
+        $\omega \in A$                  & Ereignis ist eingetreten                     \\
+        $\Omega$                        & sicheres Ereignis, tritt immer ein           \\
+        $\emptyset$                     & unmögliches Ereignis, kann nicht eingetreten \\
+        $A \cap B$                      & A und B treten ein                           \\
+        $A \cup B$                      & A oder B treten ein                          \\
+        $A \subset B$                   & A hat B zur Folge                            \\
+        $\bar{A} = \Omega \setminus A $ & nicht A                                      \\
+        \hline
+    \end{tabular}
+     &
+    Rechenregeln:
+    \begin{itemize}
+        \item $A \cap ( B \cup C) = (A \cap B ) \cup (A \cap C) $
+        \item $A \cup ( B \cap C) = (A \cup B ) \cap (A \cup C) $
+        \item $\overline{A \cap B} = \overline{A}  \cup \overline{B}$
+        \item  $\overline{A \cup B} = \overline{A} \cap \overline{B}$
+    \end{itemize}
+\end{tabular}
+\subsection{Wahrscheinlichkeit}
+\begin{tabular}{m{7.5cm} m{12cm}}
+\subsubsection*{Axiome eines Wahrscheinlichkeitsraumes}
+\begin{itemize}
+    \item Wertebereich: \newline $0 \leq P(A) \leq 1$
+    \item Wahrscheinlichkeit sicheres Ereignis: \newline$P(\Omega) = 1$
+    \item Disjunktive Vereinigung:\newline $P(A_1 \cup A_2 \cup \dots \cup A_n \cup \dots)
+              \newline = P(A_1) + P(A_2) + \dots + P(A_n) + \dots$
+\end{itemize}
+&
+\subsubsection*{Eigenschaften der Wahrscheinlichkeit}
 
+
+    \begin{itemize}
+        \item Wahrscheinlichkeit des unmöglichen Ereignisses \newline $P(\emptyset) = 0$ \newline
+              Auch $\neq \emptyset$ Ereignisse können Wahrscheinlichkeit 0 haben!
+        \item Wahrscheinlichkeit des komplementären Ereignisses \newline
+              $P(\overline{A}) = P(\Omega \setminus A) = 1 - P(A)$
+        \item Wahrscheinlichkeit der Differenz zweier Ereignisse \newline
+              $P(A \setminus B) = P(A) - P(A \cap B)$
+        \item Wahrscheinlichkeit der Vereinigung zweier Ereignisse \newline
+              $P(A \cup B) = P(A) + P(B) - P(A \cap B)$
+
+    \end{itemize}
+\end{tabular}
+\subsection{Bedingte Wahrscheinlichkeit}
 \end{document}
