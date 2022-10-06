@@ -120,10 +120,10 @@
     Perlenkettenproblem:
     auf wie viele Arten kann man eine Perlenkette der Länge k aus n Farben herstellen? \newline
     $V_n,k = n \cdot n^k-1 = n^k$                             \\
-    \hline Rekursion               & /TODO:
-    \\
-    \hline Erzeugende Funktion     & /TODO:
-    \\
+    \hline Erzeugende Funktion     & 
+    $f(z) = \sum \limits _{n = 0} ^{\infty} a_n \cdot z^n
+    = a_0 + a_1 \cdot z + a_2 \cdot z^2 + \dots + a_n \cdot z^n$ 
+  \\
     \hline
 \end{tabular}
 
@@ -204,11 +204,18 @@
 
     \end{itemize}
 \end{tabular}
-\subsection{Bedingte Wahrscheinlichkeit}
-\subsubsection*{Satz von Bayes}
-$P(R|T) \cdot P(T) = P(R \cap T) = P(T|R) \cdot P(R)$
-\\ Daraus folgt: $P(R|T) = P(T|R) \frac{P(R)}{P(T)}$ 
-und $P(T|R) = P(R|T) \frac{P(T)}{P(R)}$ 
+\subsubsection{Bedingte Wahrscheinlichkeit}
+Wahrscheinlichkeit das Ereignis $P(A)$ eintrifft,
+wenn Ereignis $P(B)$ eingetroffen ist: $P(A|B)$ 
+Bsp: Wahrscheinlichkeit
+\subsubsection*{Satz von Bayes ("Umkehrung der Bedingung")}
+$$P(R|T) \cdot P(T) = P(R \cap T) = P(T|R) \cdot P(R)$$
+\\ Daraus folgt: $$P(R|T) = P(T|R) \frac{P(R)}{P(T)}\;
+\textrm{ resp. } \; P(T|R) = P(R|T) \frac{P(T)}{P(R)}$$ 
+\subsubsection{Totale Wahrscheinlichkeit}
+Sind nur Bedingte Wahrscheinlichkeiten $P(A|B)$ und die bedingende Wahrscheinlichkeit 
+$P(B)$ bekannt, ergibt sich die totale Wahrscheinlichkeit $P(A)$ aus:
+$$P(A) = P(A|B) \cdot P(B) + P(A|\bar{B})\cdot P(\bar{B})$$
 \subsection*{Note}
 \begin{itemize}
     \item Laplace-Experiment: Experiment bei dem jedes Elementarereignis gleich wahrscheinlich ist.
