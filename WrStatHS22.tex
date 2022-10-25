@@ -15,6 +15,9 @@
 \usepackage{multicol}
 \usepackage{polyglossia}
 \usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat = newest}
 \setdefaultlanguage[variant=swiss]{german}
 
 %% License configuration
@@ -120,10 +123,10 @@
     Perlenkettenproblem:
     auf wie viele Arten kann man eine Perlenkette der Länge k aus n Farben herstellen? \newline
     $V_n,k = n \cdot n^k-1 = n^k$                             \\
-    \hline Erzeugende Funktion     & 
+    \hline Erzeugende Funktion     &
     $f(z) = \sum \limits _{n = 0} ^{\infty} a_n \cdot z^n
-    = a_0 + a_1 \cdot z + a_2 \cdot z^2 + \dots + a_n \cdot z^n$ 
-  \\
+        = a_0 + a_1 \cdot z + a_2 \cdot z^2 + \dots + a_n \cdot z^n$
+    \\
     \hline
 \end{tabular}
 
@@ -181,15 +184,16 @@
 \end{tabular}
 \subsection{Wahrscheinlichkeit}
 \begin{tabular}{m{7.5cm} m{12cm}}
-\subsubsection*{Axiome eines Wahrscheinlichkeitsraumes}
-\begin{itemize}
-    \item Wertebereich: \newline $0 \leq P(A) \leq 1$
-    \item Wahrscheinlichkeit sicheres Ereignis: \newline$P(\Omega) = 1$
-    \item Disjunktive Vereinigung:\newline $P(A_1 \cup A_2 \cup \dots \cup A_n \cup \dots)
-              \newline = P(A_1) + P(A_2) + \dots + P(A_n) + \dots$
-\end{itemize}
-&
-\subsubsection*{Eigenschaften der Wahrscheinlichkeit}
+
+    \subsubsection*{Axiome eines Wahrscheinlichkeitsraumes}
+    \begin{itemize}
+        \item Wertebereich: \newline $0 \leq P(A) \leq 1$
+        \item Wahrscheinlichkeit sicheres Ereignis: \newline$P(\Omega) = 1$
+        \item Disjunktive Vereinigung:\newline $P(A_1 \cup A_2 \cup \dots \cup A_n \cup \dots)
+                  \newline = P(A_1) + P(A_2) + \dots + P(A_n) + \dots$
+    \end{itemize}
+     &
+    \subsubsection*{Eigenschaften der Wahrscheinlichkeit}
 
 
     \begin{itemize}
@@ -201,25 +205,186 @@
               $P(A \setminus B) = P(A) - P(A \cap B)$
         \item Wahrscheinlichkeit der Vereinigung zweier Ereignisse \newline
               $P(A \cup B) = P(A) + P(B) - P(A \cap B)$
-
     \end{itemize}
 \end{tabular}
-\subsubsection{Bedingte Wahrscheinlichkeit}
-Wahrscheinlichkeit das Ereignis $P(A)$ eintrifft,
-wenn Ereignis $P(B)$ eingetroffen ist: $P(A|B)$ 
-Bsp: Wahrscheinlichkeit
-\subsubsection*{Satz von Bayes ("Umkehrung der Bedingung")}
-$$P(R|T) \cdot P(T) = P(R \cap T) = P(T|R) \cdot P(R)$$
-\\ Daraus folgt: $$P(R|T) = P(T|R) \frac{P(R)}{P(T)}\;
-\textrm{ resp. } \; P(T|R) = P(R|T) \frac{P(T)}{P(R)}$$ 
-\subsubsection{Totale Wahrscheinlichkeit}
-Sind nur Bedingte Wahrscheinlichkeiten $P(A|B)$ und die bedingende Wahrscheinlichkeit 
-$P(B)$ bekannt, ergibt sich die totale Wahrscheinlichkeit $P(A)$ aus:
-$$P(A) = P(A|B) \cdot P(B) + P(A|\bar{B})\cdot P(\bar{B})$$
-\subsection*{Note}
-\begin{itemize}
-    \item Laplace-Experiment: Experiment bei dem jedes Elementarereignis gleich wahrscheinlich ist.
-    \item Bernoulli-Experiment: Experiment mit zwei Versuchsausgängen mit Wahrscheinlichkeiten p und 1-p.
-\end{itemize}
+\begin{multicols}{2}
+
+    \subsubsection{Bedingte Wahrscheinlichkeit}
+    Wahrscheinlichkeit das Ereignis $P(A)$ eintrifft,
+    wenn Ereignis $P(B)$ eingetroffen ist: $P(A|B)$
+    Bsp: Wahrscheinlichkeit
+    \subsubsection*{Satz von Bayes ("Umkehrung der Bedingung")}
+    $$P(R|T) \cdot P(T) = P(R \cap T) = P(T|R) \cdot P(R)$$
+    \\ Daraus folgt: $$P(R|T) = P(T|R) \frac{P(R)}{P(T)}\;
+        \textrm{ resp. } \; P(T|R) = P(R|T) \frac{P(T)}{P(R)}$$
+    \subsubsection{Totale Wahrscheinlichkeit}
+    Sind nur Bedingte Wahrscheinlichkeiten $P(A|B)$ und die bedingende Wahrscheinlichkeit
+    $P(B)$ bekannt, ergibt sich die totale Wahrscheinlichkeit $P(A)$ aus:
+    $$P(A) = P(A|B) \cdot P(B) + P(A|\bar{B})\cdot P(\bar{B})$$
+    \subsection*{Note}
+    \begin{itemize}
+        \item Laplace-Experiment: Experiment bei dem jedes Elementarereignis gleich wahrscheinlich ist.
+        \item Bernoulli-Experiment: Experiment mit zwei Versuchsausgängen mit Wahrscheinlichkeiten p und 1-p.
+    \end{itemize}
+\end{multicols}
+
+\section{Statistik}
+\begin{multicols}{2}
+
+    \subsection{Zufallsvariable}
+
+    Eine Zufallsvariable X ist eine Funktion die einem
+    Versuchsausgang $\omega$ einen Wert $X(\omega)$ zuordnet.
+    Sie ist \textbf{diskret} wenn sie einzelne genaue Zahlenwerte annehmen kann.
+    Wenn sie beliebige Werte annehmen kann ist sie \textbf{stetig}.
+
+    \subsubsection*{Erwartungswert}
+    Der Erwartungswert ist der Wert der Zufallsvariable multipliziert mit ihrer Wahrscheinlichkeit.
+    $$E(x) = \sum Wert \cdot Wahrscheinlichkeit$$
+    $$ =\sum _{\omega \in \Omega} X(\omega) \cdot P({\omega}) = \sum _{i=1} ^{k} X(A_i) \cdot P(A_i)$$
+    \subsubsection*{Empirischer Erwartungswert}
+
+    $$ E(X) = \sum _i X(i) \cdot P(X=x_i) \approx \sum _i x_i \frac{n_i}{n} = \frac{x_1n_1 + x_2n_2 + \dots + x_kn_k}{n}$$
+
+    \subsubsection*{Rechenregeln}
+    $$E(X+Y) = E(X) + E(Y)$$
+    $$E(\lambda X) = \lambda E(X)$$
+
+    Vorzeichen von XY unkorreliert $\Rightarrow E(XY) = E(X)E(Y)$
+    Unabhängig: $XY \geq 0 \Rightarrow E(XY) \geq 0$ oder $XY\leq 0 \Rightarrow E(XY) \leq 0$
+
+    X und Y sind unabhängig, wenn die Ereignisse x und y unabhängig sind.
+
+    \subsection{Varianz - Streumass}
+    Die Varianz ist die Erwartete Abweichung vom Erwartungswert.
+    Sie misst die Streuung einer Zufallsvariable.
+
+    $$var(x) = E((|X-E(X)|)^2) = E(X^2) - E(X)^2$$
+
+    wenn X und Y \textbf{unabhängig} (oder unkorreliert):
+    $$var(\lambda X) = \lambda^2 var(x)$$
+    $$var(X+Y) = var(X) + var(Y)$$
+
+    \subsubsection*{Satz von Tschebyscheff}
+    Wenn X eine Zufallsvariable mir Erwartungswert $\mu = E(X)$ ist, dann gilt:
+    $$P(|X-\mu|)\leq \frac{var(X)}{\epsilon^2}$$
+    für $X-\mu = A$ und $X-\mu > \epsilon$
+
+    \subsubsection*{Satz von Bernoulli}
+    \textbf{Stichprobe:} $X_1 \dots X_n$ sind Zufallsvariablen mit gleicher Varianz und und gleichem Erwartungswert wie X.
+    \\ \textbf{Mittelwert:} $M_n = \frac{X_1+\dots+ X_n}{n}$, $E(M_n) = E(X), var(M_n) =\frac{1}{n} var(X)$
+    \\ \textbf{Satz:} $$P(|M_n -\mu|) \leq \frac{var(X)}{n\epsilon^2} $$
+    für $|M_n -\mu| > \epsilon$
+    \subsubsection*{Gesetz grosser Zahlen}
+    Angenommen die Wahrscheinlichkeit von Ereigniss A ist gleich dem Erwartungswert ($P(A) = E(X)$), dann gilt:
+    \\ \textbf{relative Häufigkeit:} $h_n = \frac{X_1+ \dots + X_n}{n}$, $E(h_n) = P(A)$ , $ var(h_n) = \frac{1}{n} var(X) = \frac{1}{n}P(A)(1-P(A))$
+    \\ \textbf{Satz von Bernoulli:}
+    $$P(|h_n - P(A)|) \leq \frac{P(A)(1-P(A))}{n\epsilon^2} \leq \frac{1}{4n\epsilon^2} $$
+    für $|h_n - P(A)| > \epsilon$
+
+    \tiny{Je grösser die Anzahl Durchführungen, desto kleine die Wahrscheinlichkeit, dass die relative Häufigkeit stark von der Wahrscheinlichkeit abweicht.}
+\end{multicols}
+
+
+\subsection*{Lineare Regression}
+\begin{multicols}{2}
+
+    \begin{tikzpicture}
+        \begin{axis}[
+                xmin = 0, xmax = 11,
+                ymin = 0, ymax = 11,
+                width = 0.45\textwidth,
+                height = 0.35\textwidth,
+                xtick distance = 1,
+                ytick distance = 1,
+                grid = both,
+                minor tick num = 1,
+                major grid style = {lightgray},
+                minor grid style = {lightgray!25},
+                xlabel = {Time ($t$)},
+                ylabel = {Position ($x$)},
+                legend cell align = {left},
+                legend pos = north west
+            ]
+            % Plot data
+            \addplot[
+                teal,
+                only marks
+            ] table[x = t, y = x] {LinearReg.dat};
+            % Linear regression
+            \addplot[
+                thick,
+                orange
+            ] table[
+                    x = t,
+                    y = {create col/linear regression={y=x}}
+                ] {LinearReg.dat};
+            % Add legend
+            \addlegendentry{Data}
+            \addlegendentry{
+                Lineare Regression
+            };
+        \end{axis}
+    \end{tikzpicture}
+    Linerer Zusammenhang zwischen Zufallsvariablen X und Y:
+    $$ Y = aX + b + Fehler$$
+    wobei, a und b zu Bestimmen sind, damit der Fehler möglichst klein wird.
+    \\ \textbf{Gleichungssystem:}
+    $$ E(X^2)a + E(X)b = E(XY) und E(X)a + b = E(Y)$$
+    daraus folgt:
+    $$a= \frac{E(XY)- E(X)E(Y)}{E(X^2) - E(X)^2} = \frac{cov(X,Y)}{var(X)}$$
+    $$b= E(Y) - aE(X)$$
+
+    \textbf{Covarianz}
+    $$cov(X,Y) = E((X-E(X))\cdot(Y-E(Y)))$$
+    $$cov(X,Y) = E(XY) - E(X)E(Y)$$
+
+    \textbf{Fehlerberechnung:}
+    $$var(Y-aX-b) = var(Y)(1-\frac{cov(X,Y)^2}{var(X)var(Y)}) $$
+    $$\frac{var(Y-aX-b)}{var(Y)} = 1- \frac{cov(X,Y)^2}{var(X)var(Y)} = 1 -r^2 $$
+    \textbf{Regressionskoeffizient:}
+    $$r = \frac{cov(X,Y)}{\sqrt{var(X) \cdot var(Y)}} = \frac{E(XY) - E(X)E(Y)}{\sqrt{var(X) \cdot var(Y)}}$$
+    wenn $r^2 \simeq  1$ Passt das Modell gut.
+\end{multicols}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Anhang
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Anhang}
+
+\newpage
+\subsection{Berechnungstabelle Lineare Regression}
+
+\begin{tabular}{|p{0.5cm}|p{1cm} p{2cm}|p{2cm} p{3cm}| p{4cm}|}
+    \hline
+    $i$ & $t_i$ & $t_i^2$ & $x_i$ & $x_i^2$ & $t_ix_i$ \\
+    \hline
+    \hline
+    1                                                  \\
+    2                                                  \\
+    3                                                  \\
+    4                                                  \\
+    5                                                  \\
+    6                                                  \\
+    7                                                  \\
+    8                                                  \\
+    9                                                  \\
+    10                                                 \\
+    11                                                 \\
+    12                                                 \\
+    13                                                 \\
+    14                                                 \\
+    15                                                 \\
+    16                                                 \\
+    17                                                 \\
+    18                                                 \\
+    19                                                 \\
+    20                                                 \\
+    \hline
+    \\
+    \\
+    \hline
+    \hline
+\end{tabular}
 
 \end{document}
