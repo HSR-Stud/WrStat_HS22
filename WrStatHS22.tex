@@ -19,6 +19,8 @@
 \usepackage{pgfplotstable}
 \pgfplotsset{compat = newest}
 \setdefaultlanguage[variant=swiss]{german}
+\usepackage{color, colortbl}
+\usepackage{graphicx}
 
 %% License configuration
 \usepackage[
@@ -255,10 +257,12 @@
     \subsubsection*{Quantil}
     Eine Unterteilung der Beobachtungswerte bzw. der Fläche der Dichtekurve.
     $p$-Quantil $p \in \mathbb{R}$ links davon ist der Anteil $p$ in \% aller Zufallswerte bzw. Der Dichtekurve.
+\end{multicols}
 
 
 
-    \subsection{diskrete Zufallsvariable}
+\subsection{diskrete Zufallsvariable}
+\begin{multicols}{2}
 
     Eine Zufallsvariable X ist eine Funktion die einem
     Versuchsausgang $\omega$ einen Wert $X(\omega)$ zuordnet.
@@ -271,18 +275,22 @@
     $$ =\sum _{\omega \in \Omega} X(\omega) \cdot P({\omega}) = \sum _{i=1} ^{k} X(A_i) \cdot P(A_i)$$
     \subsubsection*{Empirischer Erwartungswert}
 
-    $$ E(X) = \sum _i X(i) \cdot P(X=x_i) \approx \sum _i x_i \frac{n_i}{n} = \frac{x_1n_1 + x_2n_2 + \dots + x_kn_k}{n}$$
+    $$ E(X) = \sum _i X(i) \cdot P(X=x_i)$$
+    $$\approx \sum _i x_i \frac{n_i}{n} = \frac{x_1n_1 + x_2n_2 + \dots + x_kn_k}{n}$$
 
     \subsubsection*{Rechenregeln}
     $$E(X+Y) = E(X) + E(Y)$$
     $$E(\lambda X) = \lambda E(X)$$
 
-    Vorzeichen von XY unkorreliert $\Rightarrow E(XY) = E(X)E(Y)$
-    Unabhängig: $XY \geq 0 \Rightarrow E(XY) \geq 0$ oder $XY\leq 0 \Rightarrow E(XY) \leq 0$
+    \begin{itemize}
+        \item Vorzeichen von XY unkorreliert \newline $\Rightarrow E(XY) = E(X)E(Y)$
+        \item Unabhängig: $XY \geq 0 \Rightarrow E(XY) \geq 0$ \newline oder $XY\leq 0 \Rightarrow E(XY) \leq 0$
+        \item X und Y sind unabhängig, wenn die Ereignisse x und y unabhängig sind.
+    \end{itemize}
+\end{multicols}
 
-    X und Y sind unabhängig, wenn die Ereignisse x und y unabhängig sind.
-
-    \subsection{Varianz - Streumass}
+\subsection{Varianz - Streumass}
+\begin{multicols}{2}
     Die Varianz ist die Erwartete Abweichung vom Erwartungswert.
     Sie misst die Streuung einer Zufallsvariable.
 
@@ -304,7 +312,7 @@
     für $|M_n -\mu| > \epsilon$
     \subsubsection*{Gesetz grosser Zahlen}
     Angenommen die Wahrscheinlichkeit von Ereigniss A ist gleich dem Erwartungswert ($P(A) = E(X)$), dann gilt:
-    \\ \textbf{relative Häufigkeit:} $h_n = \frac{X_1+ \dots + X_n}{n}$, $E(h_n) = P(A)$ , $ var(h_n) = \frac{1}{n} var(X) = \frac{1}{n}P(A)(1-P(A))$
+    \\ \textbf{Relative Häufigkeit:} $h_n = \frac{X_1+ \dots + X_n}{n}$, $E(h_n) = P(A)$ , $ var(h_n) = \frac{1}{n} var(X) = \frac{1}{n}P(A)(1-P(A))$
     \\ \textbf{Satz von Bernoulli:}
     $$P(|h_n - P(A)|) \leq \frac{P(A)(1-P(A))}{n\epsilon^2} \leq \frac{1}{4n\epsilon^2} $$
     für $|h_n - P(A)| > \epsilon$
@@ -313,7 +321,7 @@
 \end{multicols}
 
 
-\subsection*{Lineare Regression}
+\subsection{Lineare Regression}
 \begin{multicols}{2}
 
     \begin{tikzpicture}
@@ -375,55 +383,99 @@
 
 \subsection{Stetige Zufallsvariable}
 \begin{multicols}{2}
-    
+
     \subsubsection*{Verteilungsfunktion}
     Die Verteilungsfunktion beschreib die Wahrscheinlichkeiten der Werte einer Zufallsvariable.
-$$F(x)= F_X(x) = P(X \leq x)$$
-Eigenschaften:
-\begin{itemize}
-    \item monoton wachsend
-    \item $0 \leq F_X(x) \leq 1$
-    \item $\lim_{x \to -\infty}  F(x) = 0$
-    \item $lim_{x \to \infty} F(x) = 1$
-    \item $P(a < X \leq b) = F_x(b) - F_X(a)$
-\end{itemize}
+    $$F(x)= F_X(x) = P(X \leq x)$$
+    Eigenschaften:
+    \begin{itemize}
+        \item monoton wachsend
+        \item $0 \leq F_X(x) \leq 1$
+        \item $\lim_{x \to -\infty}  F(x) = 0$
+        \item $lim_{x \to \infty} F(x) = 1$
+        \item $P(a < X \leq b) = F_x(b) - F_X(a)$
+    \end{itemize}
 
-\subsubsection*{Wahrscheinlichkeitsdichte:}
-Die Wahrscheinlichkeitsdichte ist die Ableitung der Verteilungsfunktion.
-Ihre Fläche \textbf{muss} 1 sein.
+    \subsubsection*{Wahrscheinlichkeitsdichte:}
+    Die Wahrscheinlichkeitsdichte ist die Ableitung der Verteilungsfunktion.
+    Ihre Fläche \textbf{muss} 1 sein.
 
-$$\varphi(x) = \varphi_X(x) = F'_X(x)$$
-$$F_X(x) = \int \limits _{-\infty} ^{x} \varphi(\xi)d\xi$$
+    $$\varphi(x) = \varphi_X(x) = F'_X(x)$$
+    $$F_X(x) = \int \limits _{-\infty} ^{x} \varphi(\xi)d\xi$$
 
-Eigenschaften:
-\begin{itemize}
-    \item $\varphi(x) \geq 0$
-    \item $\int \limits _{-\infty} ^{\infty} \varphi(x)dx = 1$
-    \item $F_X(x)$ ist die Stammfunktion.
-    \item $P(a < X \leq b) =\int \limits _a ^b \varphi_X(x)dx$
-\end{itemize}
+    Eigenschaften:
+    \begin{itemize}
+        \item $\varphi(x) \geq 0$
+        \item $\int \limits _{-\infty} ^{\infty} \varphi(x)dx = 1$
+        \item $F_X(x)$ ist die Stammfunktion.
+        \item $P(a < X \leq b) =\int \limits _a ^b \varphi_X(x)dx$
+    \end{itemize}
 
-\subsubsection{Erwartungswert:}
-$$E(X) = \sum Wert \cdot Wahrscheinlichkeit = \int \limits _{-\infty} ^{\infty} x \cdot \varphi(x)dx $$
-$$E(X^2) = \int \limits _{-\infty} ^{\infty} x^2 \cdot \varphi(x) dx$$
-$$E(f(X)) = \int \limits _{-\infty} ^{\infty} f(x) \cdot \varphi(x)dx$$
+    \subsubsection{Erwartungswert:}
+    $$E(X) = \sum Wert \cdot Wahrscheinlichkeit = \int \limits _{-\infty} ^{\infty} x \cdot \varphi(x)dx $$
+    $$E(X^2) = \int \limits _{-\infty} ^{\infty} x^2 \cdot \varphi(x) dx$$
+    $$E(f(X)) = \int \limits _{-\infty} ^{\infty} f(x) \cdot \varphi(x)dx$$
 
-\subsubsection*{Summe Stetiger Zufallsvariablen}
-wemm $X$ und $Y$ unabhängig sind, dann hat die Zufallsvariable $Z = X + Y$ die Wahrscheinlichkeitsdichte:
-$$\varphi_Z(z) = \varphi_X * \varphi_Y(z) = \int \limits _{-\infty} ^{\infty}  \varphi_X(x) \varphi_Y(z-x)dx$$
+    \subsubsection*{Summe Stetiger Zufallsvariablen}
+    wemm $X$ und $Y$ unabhängig sind, dann hat die Zufallsvariable $Z = X + Y$ die Wahrscheinlichkeitsdichte:
+    $$\varphi_Z(z) = \varphi_X * \varphi_Y(z) = \int \limits _{-\infty} ^{\infty}  \varphi_X(x) \varphi_Y(z-x)dx$$
 
-\subsubsection*{Summe von Gleichverteilungen}
-$$\varphi_X(x) = \varphi_Y(x)$$
-$$\varphi_{X+Y}(x) = \varphi_X * \varphi_Y(x) = \int \limits _{-\infty} ^{\infty} \varphi(y)\cdot \varphi(x-y)dy $$
+    \subsubsection*{Summe von Gleichverteilungen}
+    $$\varphi_X(x) = \varphi_Y(x)$$
+    $$\varphi_{X+Y}(x) = \varphi_X * \varphi_Y(x) = \int \limits _{-\infty} ^{\infty} \varphi(y)\cdot \varphi(x-y)dy $$
 \end{multicols}
+
+\subsection{Verteiungen}
+\subsubsection{Normalverteilung}
+X heisst Normalverteilt wenn gilt:
+$$\varphi(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
+
+\subsubsection{Poisson-Verteilung}
+{\huge TODO}
+
+\subsubsection{Exponentialverteilung}
+{\huge TODO}
+\subsection{Binomialverteilung}
+{\huge TODO}
+
+\subsection{Hypergeometrische Verteilung}
+{\huge TODO}
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Anhang
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Anhang}
+\subsection*{Formelzeichen}
+\begin{itemize}
+    \item
+    \item $\bar{x} = M_n$ Mittelwert (i.d.R. Arithmetisches Mittel)
+    \item $G =$ Geometrisches Mittel
+    \item $var(\dots)$ Varianz von \dots
+    \item $P(\dots) =$ Wahrscheinlichkeit für Eintreffen von Ereigniss \dots
+    \item $E(\dots) =$ Erwartungswert von Ereignis \dots
+    \item
+    \item $\varphi(\dots =)$ Wahrscheinlichkeitsverteilung von Ereigniss \dots
+    \item
+\end{itemize}
 
 \subsection{Taschenrechner}
+
+\newpage
+\section{Tabellen}
+\subsection{Quantile der Standardnormalverteilung}
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+    $q$   & 0,750    & 0,800    & 0,900    & 0,950    & 0,975    & 0,990    & 0,995    \\
+    \hline
+    $z_q$ & 0,674490 & 0,841621 & 1,281550 & 1,644850 & 1,959960 & 2,326350 & 2,575830 \\
+    \hline
+\end{tabular}
+
+\input{include/NormalverteilungsTabelle.tex}
 
 \newpage
 \subsection{Berechnungstabelle Lineare Regression}
