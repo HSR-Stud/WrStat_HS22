@@ -15,12 +15,20 @@
 \usepackage{multicol}
 \usepackage{polyglossia}
 \usepackage{tikz}
+\usetikzlibrary{shapes.geometric}
 \usepackage{pgfplots}
 \usepackage{pgfplotstable}
 \pgfplotsset{compat = newest}
 \setdefaultlanguage[variant=swiss]{german}
 \usepackage{color, colortbl}
 \usepackage{graphicx}
+\usepackage{pdfpages}
+
+
+%% Colors ant Tables
+\newcolumntype{g}{>{\columncolor{Gray}}c}
+\definecolor{Gray}{gray}{0.8}
+\definecolor{LightGray}{gray}{0.9}
 
 %% License configuration
 \usepackage[
@@ -124,7 +132,7 @@
     \hline Variation               &
     Perlenkettenproblem:
     auf wie viele Arten kann man eine Perlenkette der Länge k aus n Farben herstellen? \newline
-    $V_n,k = n \cdot n^k-1 = n^k$                             \\
+    $V_{n,k} = n^k$                                           \\
     \hline Erzeugende Funktion     &
     $f(z) = \sum \limits _{n = 0} ^{\infty} a_n \cdot z^n
         = a_0 + a_1 \cdot z + a_2 \cdot z^2 + \dots + a_n \cdot z^n$
@@ -153,36 +161,35 @@
         \item $A$ und $B$ = Teilmengen von $\Omega$ (hier $\omega \in A, \omega \notin B$)
         \item Spezialfälle:
               \begin{itemize}
-                  \item $A =\Omega \subset \Omega$: A tritt immer ein (sicheres Ereignis)
-                  \item $B = \emptyset \subset \Omega$: B tritt nie ein (unmögliches Ereignis)
+                  \item $A =\Omega \subset \Omega$: A tritt immer ein
+                  \item $B = \emptyset \subset \Omega$: B tritt nie ein
               \end{itemize}
     \end{itemize}
 \end{multicols}
 \begin{tabular}{l m{4cm}}
     \begin{tabular}{|p{2.5cm} |l|}
         \hline
-        Modell                          & Begriff                                      \\
+        Modell                          & Begriff                                    \\
         \hline
-        $\omega$                        & Versuchsausgang, Elementarereignis           \\
-        $\Omega$                        & alle Versuchsausgänge                        \\
-        $A \subset \Omega$              & Ereignis                                     \\
-        $\omega \in A$                  & Ereignis ist eingetreten                     \\
-        $\Omega$                        & sicheres Ereignis, tritt immer ein           \\
-        $\emptyset$                     & unmögliches Ereignis, kann nicht eingetreten \\
-        $A \cap B$                      & A und B treten ein                           \\
-        $A \cup B$                      & A oder B treten ein                          \\
-        $A \subset B$                   & A hat B zur Folge                            \\
-        $\bar{A} = \Omega \setminus A $ & nicht A                                      \\
+        $\omega$                        & Versuchsausgang, Elementarereignis         \\
+        $\Omega$                        & alle Versuchsausgänge                      \\
+        $A \subset \Omega$              & Ereignis                                   \\
+        $\omega \in A$                  & Ereignis ist eingetreten                   \\
+        $\Omega$                        & sicheres Ereignis, tritt immer ein         \\
+        $\emptyset$                     & unmögliches Ereignis, kann nicht eintreten \\
+        $A \cap B$                      & A und B treten ein                         \\
+        $A \cup B$                      & A oder B treten ein                        \\
+        $A \subset B$                   & A hat B zur Folge                          \\
+        $\bar{A} = \Omega \setminus A $ & nicht A                                    \\
         \hline
     \end{tabular}
      &
     Rechenregeln:
-    \begin{itemize}
-        \item $A \cap ( B \cup C) = (A \cap B ) \cup (A \cap C) $
-        \item $A \cup ( B \cap C) = (A \cup B ) \cap (A \cup C) $
-        \item $\overline{A \cap B} = \overline{A}  \cup \overline{B}$
-        \item  $\overline{A \cup B} = \overline{A} \cap \overline{B}$
-    \end{itemize}
+    \newline \resizebox{!}{8pt}{$A \cap ( B \cup C) = (A \cap B ) \cup (A \cap C) $}
+    \newline \resizebox{!}{8pt}{$A \cup ( B \cap C) = (A \cup B ) \cap (A \cup C) $}
+    \newline \resizebox{!}{9pt}{$\overline{A \cap B} = \overline{A}  \cup \overline{B}$}
+    \newline \resizebox{!}{9pt}{$\overline{A \cup B} = \overline{A} \cap \overline{B}$}
+    
 \end{tabular}
 \subsection{Wahrscheinlichkeit}
 \begin{tabular}{m{7.5cm} m{12cm}}
@@ -199,7 +206,7 @@
 
     \begin{itemize}
         \item Wahrscheinlichkeit des unmöglichen Ereignisses \newline $P(\emptyset) = 0$ \newline
-              Auch $\neq \emptyset$ Ereignisse können Wahrscheinlichkeit 0 haben!
+              Auch Ereignisse $\neq \emptyset$ können Wahrscheinlichkeit 0 haben!
         \item Wahrscheinlichkeit des komplementären Ereignisses \newline
               $P(\overline{A}) = P(\Omega \setminus A) = 1 - P(A)$
         \item Wahrscheinlichkeit der Differenz zweier Ereignisse \newline
@@ -218,8 +225,7 @@
     $$P(A \cap B) = P(A) \cdot P(B)$$
     \subsubsection*{Satz von Bayes ("Bedingungsumkehrung")}
     $$P(R|T) \cdot P(T) = P(R \cap T) = P(T|R) \cdot P(R)$$
-    $$P(R|T) = P(T|R) \frac{P(R)}{P(T)}\;
-        P(T|R) = P(R|T) \frac{P(T)}{P(R)}$$
+    $$P(R|T) = P(T|R) \frac{P(R)}{P(T)}$$
     \subsubsection{Totale Wahrscheinlichkeit}
     Sind nur Bedingte Wahrscheinlichkeiten $P(A|B)$ und die bedingende Wahrscheinlichkeit
     $P(B)$ bekannt, ergibt sich die totale Wahrscheinlichkeit $P(A)$ aus:
@@ -261,10 +267,10 @@
 
 
 
-\subsection{diskrete Zufallsvariable}
+\subsection{Diskrete Zufallsvariable}
 \begin{multicols}{2}
 
-    Eine Zufallsvariable X ist eine Funktion die einem
+    \noindent Eine Zufallsvariable X ist eine Funktion die einem
     Versuchsausgang $\omega$ einen Wert $X(\omega)$ zuordnet.
     Sie ist \textbf{diskret} wenn sie einzelne genaue Zahlenwerte annehmen kann.
     Wenn sie beliebige Werte annehmen kann ist sie \textbf{stetig}.
@@ -273,10 +279,6 @@
     Der Erwartungswert ist der Wert der Zufallsvariable multipliziert mit ihrer Wahrscheinlichkeit.
     $$E(x) = \sum Wert \cdot Wahrscheinlichkeit$$
     $$ =\sum _{\omega \in \Omega} X(\omega) \cdot P({\omega}) = \sum _{i=1} ^{k} X(A_i) \cdot P(A_i)$$
-    \subsubsection*{Empirischer Erwartungswert}
-
-    $$ E(X) = \sum _i X(i) \cdot P(X=x_i)$$
-    $$\approx \sum _i x_i \frac{n_i}{n} = \frac{x_1n_1 + x_2n_2 + \dots + x_kn_k}{n}$$
 
     \subsubsection*{Rechenregeln}
     $$E(X+Y) = E(X) + E(Y)$$
@@ -287,12 +289,19 @@
         \item Unabhängig: $XY \geq 0 \Rightarrow E(XY) \geq 0$ \newline oder $XY\leq 0 \Rightarrow E(XY) \leq 0$
         \item X und Y sind unabhängig, wenn die Ereignisse x und y unabhängig sind.
     \end{itemize}
+    \subsubsection*{Empirischer Erwartungswert}
+    \resizebox{0.5\textwidth}{!}{$E(X) = \sum _i X(i) \cdot P(X=x_i) \approx \sum _i x_i \frac{n_i}{n} = \frac{x_1n_1 + \dots + x_in_i}{n}$}
+
+
 \end{multicols}
 
 \subsection{Varianz - Streumass}
 \begin{multicols}{2}
-    Die Varianz ist die Erwartete Abweichung vom Erwartungswert.
-    Sie misst die Streuung einer Zufallsvariable.
+    \subsubsection*{Definition}
+    \noindent Die Varianz ist die Erwartete Abweichung vom Erwartungswert.
+    Sie misst die Streuung einer Zufallsvariable. Sie ist gleich der Quadratischen
+    Standardabweichung.
+    $$var(X) = \sigma^2(X)$$
 
     $$var(x) = E((|X-E(X)|)^2) = E(X^2) - E(X)^2$$
 
@@ -304,23 +313,29 @@
     Wenn X eine Zufallsvariable mir Erwartungswert $\mu = E(X)$ ist, dann gilt:
     $$P(|X-\mu|)\leq \frac{var(X)}{\epsilon^2}$$
     für $X-\mu = A$ und $X-\mu > \epsilon$
+    \\[10pt]
 
     \subsubsection*{Satz von Bernoulli}
-    \textbf{Stichprobe:} $X_1 \dots X_n$ sind Zufallsvariablen mit gleicher Varianz und und gleichem Erwartungswert wie X.
-    \\ \textbf{Mittelwert:} $M_n = \frac{X_1+\dots+ X_n}{n}$, $E(M_n) = E(X), var(M_n) =\frac{1}{n} var(X)$
-    \\ \textbf{Satz:} $$P(|M_n -\mu|) \leq \frac{var(X)}{n\epsilon^2} $$
-    für $|M_n -\mu| > \epsilon$
-    \subsubsection*{Gesetz grosser Zahlen}
-    Angenommen die Wahrscheinlichkeit von Ereigniss A ist gleich dem Erwartungswert ($P(A) = E(X)$), dann gilt:
-    \\ \textbf{Relative Häufigkeit:} $h_n = \frac{X_1+ \dots + X_n}{n}$, $E(h_n) = P(A)$ , $ var(h_n) = \frac{1}{n} var(X) = \frac{1}{n}P(A)(1-P(A))$
-    \\ \textbf{Satz von Bernoulli:}
-    $$P(|h_n - P(A)|) \leq \frac{P(A)(1-P(A))}{n\epsilon^2} \leq \frac{1}{4n\epsilon^2} $$
-    für $|h_n - P(A)| > \epsilon$
+    \textbf{Stichprobe:}
+    \\$X_1 \dots X_n$ sind Zufallsvariablen mit gleicher Varianz und und gleichem Erwartungswert.
+        \\ \textbf{Mittelwert:}
+        \\ \resizebox{.5\textwidth}{!}{$M_n = \frac{X_1+\dots+ X_n}{n}$, $E(M_n) = E(X), var(M_n) =\frac{1}{n} var(X)$}
+        \\ \textbf{Satz:}
+        \\$$P(|M_n -\mu|) \leq \frac{var(X)}{n\epsilon^2} $$
+        für $|M_n -\mu| > \epsilon$
+
+        \subsubsection*{Gesetz grosser Zahlen}
+        Wenn die Wahrscheinlichkeit von Ereignis A gleich dem Erwartungswert ($P(A) = E(X)$), gilt:
+        \\ \textbf{Relative Häufigkeit:}
+        \\  \resizebox{.5\textwidth}{!}{$h_n = \frac{X_1+ \dots + X_n}{n}$, $E(h_n) = P(A)$ , $ var(h_n) = \frac{1}{n} var(X) = \frac{1}{n}P(A)(1-P(A))$}
+        \\ \textbf{Satz von Bernoulli:}
+        $$P(|h_n - P(A)|) \leq \frac{P(A)(1-P(A))}{n\epsilon^2} \leq \frac{1}{4n\epsilon^2} $$
+        für $|h_n - P(A)| > \epsilon$
 
     \tiny{Je grösser die Anzahl Durchführungen, desto kleine die Wahrscheinlichkeit, dass die relative Häufigkeit stark von der Wahrscheinlichkeit abweicht.}
 \end{multicols}
 
-
+\newpage
 \subsection{Lineare Regression}
 \begin{multicols}{2}
 
@@ -336,8 +351,8 @@
                 minor tick num = 1,
                 major grid style = {lightgray},
                 minor grid style = {lightgray!25},
-                xlabel = {Time ($t$)},
-                ylabel = {Position ($x$)},
+                xlabel = {X ($x$)},
+                ylabel = {Y ($y$)},
                 legend cell align = {left},
                 legend pos = north west
             ]
@@ -360,24 +375,23 @@
         \end{axis}
     \end{tikzpicture}
 
-    Linerer Zusammenhang zwischen Zufallsvariablen X und Y:
+    \noindent Linearer Zusammenhang zwischen Zufallsvariablen X und Y,     wobei, a und b zu Bestimmen sind, damit der Fehler möglichst klein wird:
     $$ Y = aX + b + Fehler$$
-    wobei, a und b zu Bestimmen sind, damit der Fehler möglichst klein wird.
     \\ \textbf{Gleichungssystem:}
-    $$ E(X^2)a + E(X)b = E(XY) und E(X)a + b = E(Y)$$
+    \begin{eqnarray*}E(X^2)a + E(X)b& =& E(XY) \\ E(X)a + b & = & E(Y)\end{eqnarray*}
     daraus folgt:
     $$a= \frac{E(XY)- E(X)E(Y)}{E(X^2) - E(X)^2} = \frac{cov(X,Y)}{var(X)}$$
     $$b= E(Y) - aE(X)$$
 
-    \textbf{Covarianz}
-    $$cov(X,Y) = E((X-E(X))\cdot(Y-E(Y)))$$
+    \noindent\textbf{Covarianz}\\
     $$cov(X,Y) = E(XY) - E(X)E(Y)$$
 
-    \textbf{Fehlerberechnung:}
-    $$var(Y-aX-b) = var(Y)(1-\frac{cov(X,Y)^2}{var(X)var(Y)}) $$
+    \noindent\textbf{Fehlerberechnung:}
     $$\frac{var(Y-aX-b)}{var(Y)} = 1- \frac{cov(X,Y)^2}{var(X)var(Y)} = 1 -r^2 $$
-    \textbf{Regressionskoeffizient:}
+
+    \noindent\textbf{Regressionskoeffizient:}
     $$r = \frac{cov(X,Y)}{\sqrt{var(X) \cdot var(Y)}} = \frac{E(XY) - E(X)E(Y)}{\sqrt{var(X) \cdot var(Y)}}$$
+    \noindent\textbf{Bewertung des Modells} \\
     wenn $r^2 \simeq  1$ Passt das Modell gut.
 \end{multicols}
 
@@ -397,27 +411,20 @@
     \end{itemize}
 
     \subsubsection*{Wahrscheinlichkeitsdichte:}
-    Die Wahrscheinlichkeitsdichte ist die Ableitung der Verteilungsfunktion.
-    Ihre Fläche \textbf{muss} 1 sein.
-
-    $$\varphi(x) = \varphi_X(x) = F'_X(x)$$
     $$F_X(x) = \int \limits _{-\infty} ^{x} \varphi(\xi)d\xi$$
 
     Eigenschaften:
     \begin{itemize}
         \item $\varphi(x) \geq 0$
         \item $\int \limits _{-\infty} ^{\infty} \varphi(x)dx = 1$
-        \item $F_X(x)$ ist die Stammfunktion.
         \item $P(a < X \leq b) =\int \limits _a ^b \varphi_X(x)dx$
     \end{itemize}
 
     \subsubsection{Erwartungswert:}
-    $$E(X) = \sum Wert \cdot Wahrscheinlichkeit = \int \limits _{-\infty} ^{\infty} x \cdot \varphi(x)dx $$
+    $$E(X) = \sum x_i \cdot p(x_i) = \int \limits _{-\infty} ^{\infty} x \cdot \varphi(x)dx $$
     $$E(X^2) = \int \limits _{-\infty} ^{\infty} x^2 \cdot \varphi(x) dx$$
-    $$E(f(X)) = \int \limits _{-\infty} ^{\infty} f(x) \cdot \varphi(x)dx$$
-
     \subsubsection*{Summe Stetiger Zufallsvariablen}
-    wemm $X$ und $Y$ unabhängig sind, dann hat die Zufallsvariable $Z = X + Y$ die Wahrscheinlichkeitsdichte:
+    Wenn $X$ und $Y$ unabhängig sind, dann hat die Zufallsvariable $Z = X + Y$ die Wahrscheinlichkeitsdichte:
     $$\varphi_Z(z) = \varphi_X * \varphi_Y(z) = \int \limits _{-\infty} ^{\infty}  \varphi_X(x) \varphi_Y(z-x)dx$$
 
     \subsubsection*{Summe von Gleichverteilungen}
@@ -425,21 +432,176 @@
     $$\varphi_{X+Y}(x) = \varphi_X * \varphi_Y(x) = \int \limits _{-\infty} ^{\infty} \varphi(y)\cdot \varphi(x-y)dy $$
 \end{multicols}
 
-\subsection{Verteiungen}
-\subsubsection{Normalverteilung}
-X heisst Normalverteilt wenn gilt:
-$$\varphi(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
+\subsection{Verteilungen}
+\begin{minipage}{0.5\textwidth}
+    \subsubsection{Normalverteilung}
+    X heisst Normalverteilt wenn gilt:
+    $$\varphi(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
+    \subsubsection*{Standardisierung}
+    Wenn X normalverteilt mit $E(X) = \mu$ und  \newline $var(X) = \sigma^2$ dann gilt:
+    $$Z=\frac{X-\mu}{\sigma}$$
+    Z ist die Standardnormalverteilung.
+    \subsubsection*{Anwendung}
+    \begin{enumerate}
+        \item  Grundformel: $P(X<a) = P(\frac{X-\mu}{\sigma} \leq \frac{a-\mu}{\sigma})$
+        \item  da P(X) = P(Z), gilt: $P(Z \leq \frac{a-\mu}{\sigma})$
+        \item  $\Phi$ bzw. Z aus Normalverteilungstabelle \newline auslesen:
+              \newline $\Phi(-\frac{a-\mu}{\sigma}) = 1-\Phi(\frac{a-\mu}{\sigma})$
+    \end{enumerate}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+    \subsubsection{Binomialverteilung}
+    \begin{itemize}
+        \item Zwei mögliche Ausgänge $A$ und $\bar{A}$
+        \item Wahrscheinlichkeit $p=P(A)$
+        \item X = Anzahl eintreten von A
+        \item n = Anzahl Durchführungen
+    \end{itemize}
+    $$P(X=k) = \binom{n}{k}p^k(1-p)^n-k$$
+    $$E(X) = np \qquad var(X) = np(1-p)$$
+    \subsubsection*{Vergleich Normalverteilung}
+    Wenn X Binomialverteilt ist, gilt approximativ:
+    $$P(a<X\leq b)$$
+    {\tiny Wahrscheinlichkeit das X zwischen a und b liegt}
+    $$= P(\frac{a-np}{\sqrt{np(1-p)}}< \frac{X-np}{\sqrt{np(1-p)}} \leq \frac{b-np}{\sqrt{np(1-p)}})$$
+    $$= \Phi(\frac{b-np}{\sqrt{np(1-p)}})- \Phi\frac{a-np}{\sqrt{np(1-p)}}$$
+    {\tiny $\Phi$ = Normalvereilunsfunktion, änhliches vorgehen wie bei Normalverteilung}
 
-\subsubsection{Poisson-Verteilung}
-{\huge TODO}
+\end{minipage}
+\\[20pt]
+\begin{minipage}{0.5\textwidth}
+    \subsection{Hypergeometrische Verteilung}
+    \resizebox{200pt}{!}{%
 
-\subsubsection{Exponentialverteilung}
-{\huge TODO}
-\subsection{Binomialverteilung}
-{\huge TODO}
+        \begin{tikzpicture}
+            \node[ellipse,
+                draw = black,
+                minimum width = 6cm,
+                minimum height = 3cm] (e) at (2,2) {};
+            \fill [fill=green!20!white]
+            (e.240) node{} -- (e.120) node{} -- (e.130) node{} -- (e.140) node{}
+            -- (e.150) node{} -- (e.160) node{} -- (e.170) node{} -- (e.180) node{}
+            -- (e.190) node{} -- (e.200) node{} -- (e.210) node{} -- (e.220) node{}
+            -- (e.230) node{} -- (e.240) node{};
+            \node[ellipse,
+                draw = black,
+                line width=0.1mm,
+                minimum width = 6cm,
+                minimum height = 3cm] at (2,2) {};
+            \filldraw[red!30!white]
+            (1.7,2) ellipse (1.2cm and 0.75cm);
+            \draw[red]
+            (1.7,2) ellipse (1.2cm and 0.75cm);
+            \draw[line width=0.1mm] (e.120) to (e.240);
 
-\subsection{Hypergeometrische Verteilung}
-{\huge TODO}
+            \node[red] at  (1.7, 2.9) {$n$};
+            \node[green!80!black] at (0,2.2) {$M$};
+            \node[black] at (3,3.7) {$N$};
+            \node[green!80!black] at (0.8,2) {$m$};
+            \node[black] at (2,2) {$n-m$};
+            \node[black] at (3.8,2.4) {$N-M$};
+        \end{tikzpicture}
+    }
+
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+    \begin{tabular}{clc}
+        n aus N auswähbar:        & $\binom{N}{n}$     \\[5pt]
+        m Treffer aus M:          & $\binom{M}{m}$     \\[5pt]
+        n-m Nichttreffer aus N-M: & $\binom{N-M}{n-m}$
+    \end{tabular}
+    \\[10pt]
+    \textbf{Wahrscheinlichkeit:}
+    $$P(X=m) = \frac{\binom{M}{m}\binom{N-M}{n-m}}{\binom{N}{n}}$$
+\end{minipage}
+\textbf{{Weitere Verteilungen Siehe Anhang}}
+\subsection{Ergänzungen für weitere Verteilungen}
+\subsubsection{Potenzverteilung}
+Gini Koeffizient: $\alpha = \frac{\lambda -2}{\lambda -1}$
+\newline Allgemein: Y\% hat X\%  $ \rightarrow X / Y \rightarrow \lambda = \frac{\log{X\%}}{\log{Y\%}}$
+\newline zB. für 80/20 Regel $\lambda = \frac{\log{0.8}}{\log{0.2}}$
+
+\newpage
+\section{Nullhypothesentest}
+
+\begin{minipage}{0.49\textwidth}
+    \subsection{allgemeines Vorgehen}
+    \begin{enumerate}
+        \item Hypothese $H_0$ aufstellen die der Test
+              \newline wiederlegen soll
+        \item Festlegung Irrtumswahrscheinlichkeit $\alpha$,
+              \newline daraus folgt: $p = 1-\alpha$
+              \newline übliche Werte: 0.05 (Signifikant)
+              \newline  0.01, 0.001 (hoch Signifikant)
+        \item Testgrösse X, Bestimmen der Wahrscheinlichkeitsverteilung (siehe nächster Abschnitt)
+              (\item Parameter der Verteilung schätzen)
+        \item Bestimmen der Schranken $x_{krit}$
+              \begin{itemize}
+                  \item Einseitiger Test $P(X> x_{krit})= \alpha$
+                  \item Zweiseitiger Test $P(|X| > x_{krit}) = \frac{\alpha}{2}$
+              \end{itemize}
+        \item Tabellen zur Hilfe nehmen
+        \item Falls Messungen ergeben $X > x_{krit}$
+              \newline $\rightarrow$ Hypothese falsch mit Wahrscheinlichkeit $p$
+    \end{enumerate}
+\end{minipage}%
+\begin{minipage}{0.49\textwidth}
+    \subsection{Diskrete Verteilung}
+    \textbf{$\chi^2$-Test}
+    \begin{enumerate}
+        \item Daten erfassen, Bedingung: $n_{i} \geq 5 \forall i$
+        \item Irrtumswahrscheinlichkeit $\alpha$ bestimmen,
+              \newline gängige Werte: 0.1, 0.05, 0.01
+        \item Freiheitsgrade bestimmen ($i = k-1$)
+        \item Diskrepanz berechenen mit Tabelle im Anhang
+        \item Kritische Diskrepanz $D_{krit}$ mithilfe von $\chi^2$-Tabelle in Anhang bestimmen
+        \item Hypothese beurteilen:
+              \begin{itemize}
+                  \item Wahrscheinlichkeit $p= 1- \alpha$
+                  \item $D \geq D_{krit}$ Hypothese unwahrscheinlich
+                  \item $D < D_{krit}$ Hypothese nicht wiederlegbar
+                  \item $D \leq D_{krit}$  mit $p= \alpha$
+                        \newline Daten möglicherweise künstlich hergestellt
+              \end{itemize}
+    \end{enumerate}
+\end{minipage}
+\\[30pt]
+
+\begin{minipage}{0.49\textwidth}
+    \subsection{Test einer Verteilung}
+    \textbf{Kolmogorov-Smirnov Test}
+    \begin{enumerate}
+        \item Hypothese: $X$ hat Verteilungsfunktion $F_X$
+        \item Werte $x_1$ bis $X_n$ aufsteigend sortieren
+        \item $K_n^{\pm}$ berechenen mit Tabelle im Anhang
+              \newline $K_n^+ = \sqrt{n} \cdot max(\frac{i}{n}-F_X(x_i))$
+              \newline $K_n^- = \sqrt{n} \cdot max(F_X(x_i) - \frac{i-1}{m})$
+        \item $t_{n, 1-\alpha}$ und $t_{n, \alpha}$ aus K-Tabelle herauslesen
+        \item Wenn $K_n^+ > T_{n, 1-\alpha}$ oder $K_n^- < t_{n, \alpha}$
+              \newline $\rightarrow$ Hypothese verwerfen
+    \end{enumerate}
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+
+    \subsection{Vergleichen von Mittelwerten}
+    \textbf{t-Test}
+    \begin{enumerate}
+        \item Hypothese: $E(X) = E(Y)$
+        \item Daten bestimmen:
+              \newline $n$ Messungen von $x_i \rightarrow \bar{X} = \frac{X_1 + \dots + X_n}{n}$
+              \newline $m$ Messungen von $y_i \rightarrow \bar{Y} = \frac{Y_1 + \dots + Y_m}{m}$
+              \newline $S^2_x = \frac{1}{n-1} \cdot \sum_{i=1}^{n}(X_i-\bar{X})^2$
+              \newline $S^2_y = \frac{1}{m-1} \cdot \sum_{i=1}^{m}(X_i-\bar{Y})^2$
+        \item Testgrösse:
+              \newline $T = \frac{\bar{X} - \bar{Y}}{\sqrt{(n-1)
+                          \cdot S^2_x + (m-1)\cdot S^2_y}}\cdot \sqrt{\frac{nm(n+m-2)}{n+m}}$
+
+        \item Kritischer Wert $t_{krit}$ aus t-Tabelle auslesen
+              \newline $k=n + m - 2$ und $p = 1- \alpha$
+        \item Wenn $T>t_{krit}$, Hypothese verwerfen
+    \end{enumerate}
+\end{minipage}
+
 
 
 
@@ -447,88 +609,66 @@ $$\varphi(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Anhang
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 \section{Anhang}
-\subsection*{Formelzeichen}
-\begin{itemize}
-    \item
-    \item $\bar{x} = M_n$ Mittelwert (i.d.R. Arithmetisches Mittel)
-    \item $G =$ Geometrisches Mittel
-    \item $var(\dots)$ Varianz von \dots
-    \item $P(\dots) =$ Wahrscheinlichkeit für Eintreffen von Ereigniss \dots
-    \item $E(\dots) =$ Erwartungswert von Ereignis \dots
-    \item
-    \item $\varphi(\dots =)$ Wahrscheinlichkeitsverteilung von Ereigniss \dots
-    \item
-\end{itemize}
+\section{Wahl der Verteilung}
+\begin{tabular}{|l|p{10cm}|}
+    \hline
+    Gleichverteilung             & Alle möglichen Werte haben die gleiche Wahrscheinlichkeit                                         \\
+    \hline
+    Exponentialverteilung        & Dauer von zuf ̈alligen Zeitintervallen ohne Ged ̈achtnis                                            \\
+    \hline
+    Normalverteilung             & Viele kleine, unabh ̈angige Zufallsprozesse sammeln sich zu einer normalverteilten Zufallsvariable \\
+    \hline
+    Binomialverteilung           & Experiment mit zwei Ausgängen                                                                     \\
+    \hline
+    Hypergeometrische Verteilung & Wahrscheinlichkeit, dass in einer Stichprobe, Elemente einer Teilmenge zu finden sind             \\
+    \hline
+    Poissonverteilung            & Häufigkeiten seltener Ereignisse                                                                  \\
+    \hline
+    t-Verteilung                 & Varianz aus Stichproben geschätzt (für grosse $n$ kann Normalverteilung verwendet werden)         \\
+    \hline
+    $\chi^2$-Verteilung          & Test ob eine Zufallsvariable Normalverteilt ist. Anwendung bei Hypothesentests                    \\
+    \hline
+\end{tabular}
+\subsection{Formelzeichen (Auswahl)}
+\begin{tabular}{ll}
 
-\subsection{Taschenrechner}
+
+    $\bar{x} = M_n$         & Mittelwert (i.d.R. Arithmetisches Mittel)                         \\
+    $G$                     & Geometrisches Mittel                                              \\
+    $var(\dots) = \sigma^2$ & Varianz von \dots                                                 \\
+    $\sigma$                & Standardabweichung                                                \\
+    $med(\dots)$            & Median von \dots                                                  \\
+    $P(\dots) = p $         & Wahrscheinlichkeit für Eintreffen von Ereignis \dots              \\
+    $E(\dots) = \mu$        & Erwartungswert von Ereignis \dots                                 \\
+    $F(\dots)$              & Verteilungsfunktion von Ereigniss \dots                           \\
+    $\varphi(\dots)$        & Wahrscheinlichkeitsverteilung von Ereignis \dots                  \\
+    $\alpha$                & Irrtumswahrscheinlichkeit (Gini-Koeffizient bei Potenzverteilung) \\
+    $S$                     & Diskrepanz
+\end{tabular}
+
+\newpage
+\input{include/Taschenrechner.tex}
 
 \newpage
 \section{Tabellen}
-\subsection{Quantile der Standardnormalverteilung}
-
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
-    \hline
-    $q$   & 0,750    & 0,800    & 0,900    & 0,950    & 0,975    & 0,990    & 0,995    \\
-    \hline
-    $z_q$ & 0,674490 & 0,841621 & 1,281550 & 1,644850 & 1,959960 & 2,326350 & 2,575830 \\
-    \hline
-\end{tabular}
-
 \input{include/NormalverteilungsTabelle.tex}
+\input{include/TVerteilungsTabelle.tex}
+\input{include/QuantilenKolmogorovTest.tex}
+\input{include/QuantilenXQuadratVerteilung.tex}
 
-\newpage
-\subsection{Berechnungstabelle Lineare Regression}
 
-\begin{tabular}{|p{0.5cm}|p{1cm} p{2cm}|p{2cm} p{3cm}| p{4cm}|}
-    \hline
-    $i$   & $t_i$ & $t_i^2$ & $x_i$ & $x_i^2$ & $t_ix_i$ \\
-    \hline
-    \hline
-    1     &       &         &       &         &          \\[20pt]
-    \hline
-    2     &       &         &       &         &          \\[20pt]
-    \hline
-    3     &       &         &       &         &          \\[20pt]
-    \hline
-    4     &       &         &       &         &          \\[20pt]
-    \hline
-    5     &       &         &       &         &          \\[20pt]
-    \hline
-    6     &       &         &       &         &          \\[20pt]
-    \hline
-    7     &       &         &       &         &          \\[20pt]
-    \hline
-    8     &       &         &       &         &          \\[20pt]
-    \hline
-    9     &       &         &       &         &          \\[20pt]
-    \hline
-    10    &       &         &       &         &          \\[20pt]
-    \hline
-    11    &       &         &       &         &          \\[20pt]
-    \hline
-    12    &       &         &       &         &          \\[20pt]
-    \hline
-    13    &       &         &       &         &          \\[20pt]
-    \hline
-    14    &       &         &       &         &          \\[20pt]
-    \hline
-    15    &       &         &       &         &          \\[20pt]
-    \hline
-    16    &       &         &       &         &          \\[20pt]
-    \hline
-    17    &       &         &       &         &          \\[20pt]
-    \hline
-    18    &       &         &       &         &          \\[20pt]
-    \hline
-    19    &       &         &       &         &          \\[20pt]
-    \hline
-    20    &       &         &       &         &          \\[20pt]
-    \hline
-          &       &         &       &         &          \\
-    Total &       &         &       &         &          \\
-    \hline
-    \hline
-\end{tabular}
 
+
+\section{Verteilungsdatenblätter ©	Prof. Dr. Andreas Müller}
+\includepdf[pages=1-11,landscape, scale=0.95,nup=1x2]{include/VerteilungsDatenblätterByAndreasMueller.pdf}
+
+\section{Berechnungstabellen}
+\input{include/LineareRegressionTabelle.tex}
+
+\newpage\null\thispagestyle{empty}\addtocounter{page}{-1}\newpage %Inserts an empty Page without adding a page-number
+
+\input{include/BerechnungstabelleDiskrepanz.tex}
+\input{include/BerechnungstabelleKSTest.tex}
 \end{document}

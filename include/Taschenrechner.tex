@@ -1,0 +1,47 @@
+\subsection{Taschenrechner}
+\begin{itemize}
+    \item Modell: TI-nspire CX-II T CAS
+    \item Parameter in eckigen Klammern sind optionale Parameter
+    \item Parameter mit Komma trennen
+    \item $\{\dots\}$ definiert eine Liste, Fett-gedruckte Buchstaben (\textbf{A}) Matrizen
+    \item Liste kann mit "ctrl" und ")" eigegeben werden, Elemente mit Komma trennen
+    \item Kurzbefehle: Menü-Taste Drücken, Zahlenfolge eintippen
+\end{itemize}
+\begin{tabular}{|p{5cm}|c|p{10cm}|}
+    \hline
+    \rowcolor{Gray}
+    \textbf{Funktion}                & \textbf{Kurzbefehl}              & \textbf{Beschreibung}                                                                                                    \\
+    \hline
+    sum(\{...\})                     & -                                & Berechnet die \textbf{Summe} der Elemente einer Liste.                                                                   \\
+    \hline
+    mean(\{...\} , [\{...\}])        & $6 \rightarrow 3 \rightarrow 3$  & Berechnet das \textbf{arithmetische Mittel} der Liste.
+    \newline Zweite Liste = Gewichtung der Elemente                                                                                                                                                \\
+    \hline
+    mean(\textbf{A} , [\textbf{B}])  & $6 \rightarrow 3 \rightarrow 3$  & Gibt einen Zeilenvektor mit den \textbf{arithmetischen Mitteln}
+    \newline der Spalten zurück.
+    \newline zweite Matrix B = Gewichtung Elemente von A                                                                                                                                           \\
+    \hline
+    median(\{...\})                  & $6 \rightarrow 3 \rightarrow 4$  & Berechnet den \textbf{Median} der Elemente der Liste.                                                                    \\
+    \hline
+    median(\textbf{A})               & $6 \rightarrow 3 \rightarrow 4$  & Gibt einen Zeilenvektor mit den \textbf{Medianwerten} der Spalten zurück.                                                \\
+    \hline
+    stDevPop(\{...\})                & $6 \rightarrow 3 \rightarrow 9 $ & Berechnet die \textbf{Standardabweichung} $\sigma$ der Liste                                                             \\
+    \hline
+    varPop(\{...\})                  & $6 \rightarrow 3 \rightarrow A$  & Berechnet die \textbf{Varianz} $\sigma$ der List                                                                         \\
+    \hline
+    nCr(n, k)                        & $5 \rightarrow 3$                & \textbf{Binomialkoeffizient} $\binom{n}{k}$, Anzahl möglichkeiten k Elemente aus n auszuwählen. \newline \textbf{Kombination}     \\
+    \hline
+    nPr(n, k)                        & $5 \rightarrow 2$                & Anzahl Möglichkeiten unter Berücksichtigung der Reihenfolge
+    \newline k Elemente aus n auszuwählen. \newline \textbf{Permutation}                                                                                                                                    \\
+    \hline
+    OneVar(L1, [L2], [L3], [L4])     & -                                & Berechnet \textbf{Statistiken} der Liste L1.
+    \newline Optionale Parameter:
+    \newline[L2]: Häufigkeit, [L3]: Klassencodes, [L4]: Klassenliste                                                                                                                               \\
+    \hline
+    stat.results                     & $6 \rightarrow 2$                & Zeigt ergebnisse aus letzte Statistik-Berechnung. Anstelle von "result" kann auch auf einzelne Werte zugegriffen werden. \\
+    \hline
+    Lineare Regression \newline
+    {\tiny nur via Eingabeassistent} & $6 \rightarrow 7 \rightarrow A$  & Berechnet Diverse Werte für die \textbf{Lineare Regression}. Werte müssen als Liste eingegeben werden(\{...\}).
+    \newline \textbf{Auchtung:} Parameter $a$ + $b$ sind vertauscht.                                                                                                                               \\
+    \hline
+\end{tabular}
