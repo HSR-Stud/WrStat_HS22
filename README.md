@@ -7,7 +7,7 @@ Wahrscheinlichkeitsrechnung und Statistik HS22, Dozent: Andreas Müller
 Zusammenfassung zum Modul WrStat \
 Verteilungstabellen \
 Verteilungsdatenblätter by Andreas Müller \
-Berechnungstabellen \
+Berechnungstabellen 
 
 ## Contributors
 
